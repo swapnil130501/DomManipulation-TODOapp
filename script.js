@@ -12,9 +12,37 @@ function addTodoToLocalStorage(todoText) {
 
 function appendTodoInHtml(todoText) {
     const todoList = document.getElementById("todoList");
-    const todo = document.createElement("li");
-    todo.textContent = todoText;
-    todoList.appendChild(todo);
+
+    const todoItem = document.createElement("li");
+
+    const textDiv = document.createElement("div");
+
+    textDiv.textContent = todoText;
+    todoItem.classList.add("todoItem");
+
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("todoButtons");
+
+    const editBtn = document.createElement('button');
+    editBtn.textContent = "Edit";
+    editBtn.classList.add("editBtn");
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add("deleteBtn");
+
+    const completeBtn = document.createElement('button');
+    completeBtn.textContent = "Complete";
+    completeBtn.classList.add("completeBtn");
+
+    wrapper.appendChild(editBtn);
+    wrapper.appendChild(deleteBtn);
+    wrapper.appendChild(completeBtn);
+
+    todoItem.append(textDiv);
+    todoItem.append(wrapper);
+    
+    todoList.appendChild(todoItem);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -39,13 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
     todoInput.addEventListener("change", (event) => {
         const todoText = event.target.value;
         event.target.value = todoText.trim();
-    })
+    });
 
     const todos = loadTodos();
 
     todos.todoList.forEach(todo => {
-        const newTodoItem = document.createElement("li");
-        newTodoItem.textContent = todo;
-        todoList.appendChild(newTodoItem);
+        appendTodoInHtml(todo);
     });
 });
